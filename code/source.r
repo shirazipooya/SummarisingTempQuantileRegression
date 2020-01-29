@@ -229,27 +229,27 @@ clusterExport(cl = cl,
               c('QuantileSlopesPlot', 'data'))
 
 # plot
-st <- c("40718")#, "40738", "40745", "40841")
+st <- c("40718", "40736", "40745", "40856")
 
 for (i in st) {
   lapply(X = data[i],
          FUN = function(x) plotTS(data = x,
                                   x = 't',
                                   x_label = 'Temperature (°C)',
-                                  y_limit = c(-10, 35)))
+                                  y_limit = c(-5, 35)))
 
   parLapply(cl = cl,
             X = data[i],
             fun = function(x) QuantileSlopesPlot(data = x,
                                                  x = 't',
                                                  x_label = 'Temperature (°C)',
-                                                 y_limit = c(0.0,0.5)))
+                                                 y_limit = c(0.15,0.55)))
 
-  lapply(X = data[i],
-         FUN = function(x) Bootstrap_Distribution_QR(data = x,
-                                                     x = 't',
-                                                     x_limit = c(0, 0.5),
-                                                     x_label = 'Slope (°C/decade)'))
+lapply(X = data[i],
+       FUN = function(x) Bootstrap_Distribution_QR(data = x,
+                                                   x = 't',
+                                                   x_limit = c(0.0, 0.8),
+                                                   x_label = 'Slope (°C/decade)'))
 }
 
 stopCluster(cl)
